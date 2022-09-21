@@ -5,8 +5,8 @@ variable "name" {
 
 variable "db_user" {
   type    = string
-  sensitive = true
   default = "example_db_user"
+  sensitive = false
 }
 
 variable "db_pass" {

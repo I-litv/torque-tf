@@ -5,14 +5,12 @@ variable "name" {
 
 variable "db_user" {
   type    = string
-  default = "example_db_user"
-  sensitive = false
-}
+  sensitive = true
+  }
 
 variable "db_pass" {
   type    = string
   sensitive = true
-  default = "example_db_password"
 }
 
 variable "s3_bucket" {

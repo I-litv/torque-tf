@@ -1,0 +1,54 @@
+spec_version: 2
+description: Auto generated blueprint for terraform module Instance
+# blueprint inputs can be provided by the user, API or CI plugin when creating an environment from this blueprint.
+inputs:
+  aws_region:
+    type: string
+    default: us-west-2
+  param_db_pass_name:
+    type: string
+    default: example_db_password
+  param_db_user_name:
+    type: string
+    default: example_db_user
+  name:
+    type: string
+    default: My Instance
+  host_name:
+    type: execution-host
+# blueprint outputs define which data that was generated during environment provisioning will be returned to the user, API or CI.
+outputs:
+  public_dns:
+    kind: link
+    value: '{{ .grains.Instance.outputs.public_dns }}'
+  s3_bucket-arn:
+    value: '{{ .grains.s3Bucket.outputs.s3_bucket_arn }}'
+grains:
+  Instance:
+    kind: terraform
+    depends-on: Customer-TF/Secrets-SSM, Customer-TF/S3-Bucket
+    spec:
+      source:
+        store: torque-tf
+        path: Customer-TF/Instance
+      host:
+      # Execution Host - the platform where the asset executable will run.
+      # For example, a Kubernetes cluster can be used as an execution host.
+        name: '{{ .inputs.host_name }}'
+        # A service account annotated with a role ARN with permissions to run the asset
+        # service-account: <service-account-name>
+      inputs:
+      - aws_region: '{{ .inputs.aws_region }}'
+      - db_pass: '{{ .grains.Secrets-SSM.outputs.db_pass }}'
+      - db_user: '{{ .grains.Secrets-SSM.outputs.db_user }}'
+      - name: '{{ .inputs.name }}'
+      - s3_bucket: '{{ .grains.S3-Bucket.outputs.bucket_name }}'
+      # The environment variables declared in this section will be available during the grain deployment as well as the grain destroy phase
+      # env-vars:
+      # - VAR_NAME: var value
+      env-vars: []
+      outputs:
+      - public_dns
+    # The terraform version that will be used to deploy the module
+    tf-version: 1.3.0
+  

@@ -22,6 +22,7 @@ outputs:
     kind: link
     value: '{{ .grains.Instance.outputs.public_dns }}'
   s3_bucket-arn:
+    kind: link
     value: '{{ .grains.S3-Bucket.outputs.s3_bucket_arn }}'
 grains:
   Secrets-SSM:

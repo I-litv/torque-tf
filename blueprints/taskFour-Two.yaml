@@ -24,9 +24,56 @@ outputs:
   s3_bucket-arn:
     value: '{{ .grains.s3Bucket.outputs.s3_bucket_arn }}'
 grains:
+  Secrets-SSM:
+        kind: terraform
+        spec:
+          source:
+            store: torque-tf
+            path: Customer-TF/Secrets-SSM
+          host:
+          # Execution Host - the platform where the asset executable will run.
+          # For example, a Kubernetes cluster can be used as an execution host.
+            name: '{{ .inputs.host_name }}'
+            # A service account annotated with a role ARN with permissions to run the asset
+            # service-account: <service-account-name>
+          inputs:
+          - aws_region: '{{ .inputs.aws_region }}'
+          - param_db_pass_name: '{{ .inputs.param_db_pass_name }}'
+          - param_db_user_name: '{{ .inputs.param_db_user_name }}'
+          # The environment variables declared in this section will be available during the grain deployment as well as the grain destroy phase
+          # env-vars:
+          # - VAR_NAME: var value
+          env-vars: []
+          outputs:
+          - db_pass
+          - db_user
+        # The terraform version that will be used to deploy the module
+        tf-version: 1.2.9
+  S3-Bucket:
+    kind: terraform
+    spec:
+      source:
+        store: torque-tf
+        path: Customer-TF/S3-Bucket
+      host:
+      # Execution Host - the platform where the asset executable will run.
+      # For example, a Kubernetes cluster can be used as an execution host.
+        name: '{{ .inputs.host_name }}'
+        # A service account annotated with a role ARN with permissions to run the asset
+        # service-account: <service-account-name>
+      inputs:
+      - aws_region: '{{ .inputs.aws_region }}'
+      # The environment variables declared in this section will be available during the grain deployment as well as the grain destroy phase
+      # env-vars:
+      # - VAR_NAME: var value
+      env-vars: []
+      outputs:
+      - bucket_name
+    # The terraform version that will be used to deploy the module
+    tf-version: 1.2.9
   Instance:
     kind: terraform
-    depends-on: Customer-TF/Secrets-SSM, Customer-TF/S3-Bucket
+    depends-on: Secrets-SSM, S3-Bucket
     spec:
       source:
         store: torque-tf

@@ -63,8 +63,8 @@ grains:
         # service-account: <service-account-name>
       inputs:
       - aws_region: '{{ .inputs.aws_region }}'
-      - db_pass: '{{ .grains.Secret-SSM.outputs.db_pass }}'
-      - db_user: '{{ .grains.Secret-SSM.outputs.db_user }}'
+      - db_pass: '{{ .grains.Secrets-SSM.outputs.db_pass }}'
+      - db_user: '{{ .grains.Secrets-SSM.outputs.db_user }}'
       - name: '{{ .inputs.name }}'
       - s3_bucket: '{{ .inputs.s3_bucket }}'
       # The environment variables declared in this section will be available during the grain deployment as well as the grain destroy phase

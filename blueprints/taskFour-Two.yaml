@@ -69,6 +69,7 @@ grains:
       env-vars: []
       outputs:
       - bucket_name
+      - s3_bucket_arn
     # The terraform version that will be used to deploy the module
     tf-version: 1.2.9
   Instance:

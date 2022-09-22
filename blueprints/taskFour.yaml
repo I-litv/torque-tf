@@ -51,6 +51,7 @@ grains:
       tf-version: 1.2.9
   Instance:
     kind: terraform
+    depends-on: Secrets-SSM
     spec:
       source:
         store: torque-tf

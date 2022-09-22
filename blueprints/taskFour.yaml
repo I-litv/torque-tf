@@ -22,6 +22,7 @@ inputs:
 # blueprint outputs define which data that was generated during environment provisioning will be returned to the user, API or CI.
 outputs:
   public_dns:
+    kind: link
     value: '{{ .grains.Instance.outputs.public_dns }}'
 grains:
   Secrets-SSM:

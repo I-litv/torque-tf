@@ -22,7 +22,7 @@ outputs:
     kind: link
     value: '{{ .grains.Instance.outputs.public_dns }}'
   s3_bucket-arn:
-    value: '{{ .grains.s3Bucket.outputs.s3_bucket_arn }}'
+    value: '{{ .grains.S3-Bucket.outputs.s3_bucket_arn }}'
 grains:
   Secrets-SSM:
         kind: terraform

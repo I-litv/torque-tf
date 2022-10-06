@@ -24,6 +24,9 @@ outputs:
   s3_bucket-arn:
     kind: link
     value: '{{ .grains.S3-Bucket.outputs.bucket_arn }}'
+  bucket_name:
+    kind: link
+    value: '{{.grains.S3-Bucket.outputs.bucket_name}}'
 grains:
   Secrets-SSM:
         kind: terraform

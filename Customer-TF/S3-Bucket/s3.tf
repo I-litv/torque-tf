@@ -6,7 +6,7 @@ variable "aws_region" {
 resource "aws_s3_bucket" "bucket" {
     bucket = "my-bucket-test-1995"
     force_destroy = true  
-    acl = "private"
+    acl = "public"
 
     tags = {
     Name        = "My bucket"

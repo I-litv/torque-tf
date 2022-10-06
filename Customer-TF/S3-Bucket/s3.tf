@@ -4,12 +4,12 @@ variable "aws_region" {
 }
 
 resource "aws_s3_bucket" "bucket" {
-    bucket = "my-bucket-test-1995"
+    bucket = "igor-l-bucket"
     force_destroy = true  
     acl = "private"
 
     tags = {
-    Name        = "My bucket"
+    Name        = "igor-l-bucket"
     }
 }
 
